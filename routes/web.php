@@ -23,8 +23,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('news',function(){
     return view('news.index');
 })->name('news.index');
+
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('products', \App\Http\Controllers\ProductController::class);
+    Route::resource('groups', \App\Http\Controllers\GroupController::class);
 });

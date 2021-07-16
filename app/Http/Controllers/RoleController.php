@@ -12,13 +12,12 @@ use DB;
 class RoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     *  Need to have Permission to access.
      *
-     * @return \Illuminate\Http\Response
      */
     function __construct()
     {
-         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
         // $this->middleware('role:Admin', ['index']);
         $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
@@ -111,7 +110,6 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permission' => 'required',
         ]);
 
         $role = Role::find($id);

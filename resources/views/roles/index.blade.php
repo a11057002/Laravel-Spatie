@@ -30,7 +30,7 @@
             <tr>
                 <td>{{ $role->id }}</td>
                 <td>{{ $role->name }}</td>
-                <td>
+                <td style="max-width:200px;">
                     @if (!empty($role->getAllPermissions()))
                         @foreach ($role->getAllPermissions() as $v)
                             <label class="badge badge-secondary">{{ $v['name'] }}</label>
