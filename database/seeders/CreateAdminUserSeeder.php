@@ -17,13 +17,13 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
 
-        // for ($i = 0; $i < 10; $i++) {
-        //     $user = User::create([
-        //         'name' => 'andy',
-        //         'email' => 'test' . $i .'@a.com',
-        //         'password' => bcrypt('andy1234')
-        //     ]);
-        // }
+        for ($i = 0; $i < 10; $i++) {
+            $user = User::create([
+                'name' => 'andy',
+                'email' => 'test' . $i .'@a.com',
+                'password' => bcrypt('andy1234')
+            ]);
+        }
         // $role = "user";
 
         // $user = User::create([

@@ -22,7 +22,8 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'DESC')->paginate(5)->onEachSide(2);
+        // paginate will calculate all pages then return while simplePaginate only return previous and next page
+        $data = User::orderBy('id', 'DESC')->simplePaginate(5)->onEachSide(2);
         return view('users.index', compact('data'));
     }
 

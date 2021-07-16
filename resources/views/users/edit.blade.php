@@ -51,13 +51,6 @@
             <div class="form-group">
                 <strong>身份:</strong>
                 {!! Form::select('roles[]', $roles, $userRole, ['class' => 'form-control', 'multiple']) !!}
-
-                <!-- CheckBox form of Roles selection -->
-                <!-- @foreach ($roles as $role) <li style="list-style-type: none;" label={{ $role }}>
-                    {!! Form::checkbox('roles[]', $role, $userRole[$role] ?? null) !!}
-                    {{ $role }}
-                </li> @endforeach  -->
-
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
