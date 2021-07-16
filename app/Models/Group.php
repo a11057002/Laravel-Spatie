@@ -18,7 +18,7 @@ class Group extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany('\App\Models\User');
+        return $this->BelongsToMany('\App\Models\User','user_group');
     }
 
     public function getUsersName(): Collection

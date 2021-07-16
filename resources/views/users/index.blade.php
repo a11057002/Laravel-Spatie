@@ -26,6 +26,7 @@
             <th>編號</th>
             <th>名字</th>
             <th>信箱</th>
+            <th>群組</th>
             <th>身份</th>
             <th width="280px">動作</th>
         </tr>
@@ -35,14 +36,21 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    @if (!empty($user->getRoleNames()))
-                        @foreach ($user->getRoleNames() as $v)
-                            <label class="badge badge-secondary">{{ $v }}</label>
+                    @if (!empty($user->getGroupsName()))
+                        @foreach ($user->getGroupsName() as $name)
+                            <label class="badge badge-info text-white">{{ $name }}</label>
                         @endforeach
                     @endif
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="{{ route('users.show', $user->id) }}">資料</a>
+                    @if (!empty($user->getRoleNames()))
+                        @foreach ($user->getRoleNames() as $name)
+                            <label class="badge badge-secondary">{{ $name }}</label>
+                        @endforeach
+                    @endif
+                </td>
+                <td>
+                    {{-- <a class="btn btn-primary" href="{{ route('users.show', $user->id) }}">資料</a> --}}
                     <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">編輯</a>
                     
                     @if (auth()->user()->id != $user->id)                        

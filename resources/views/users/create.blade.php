@@ -27,32 +27,38 @@
     <div class="row mt-3">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
+                <strong>名稱:</strong>
                 {!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Email:</strong>
+                <strong>信箱:</strong>
                 {!! Form::text('email', null, ['placeholder' => 'Email', 'class' => 'form-control']) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Password:</strong>
+                <strong>密碼:</strong>
                 {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control']) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Confirm Password:</strong>
+                <strong>確認密碼:</strong>
                 {!! Form::password('confirm-password', ['placeholder' => 'Confirm Password', 'class' => 'form-control']) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Role:</strong>
+                <strong>身份:</strong>
                 {!! Form::select('roles[]', $roles, [], ['class' => 'form-control', 'multiple']) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>群組:</strong>
+                {!! Form::select('groups[]', $groups, [], ['class' => 'form-control', 'multiple']) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

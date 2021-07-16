@@ -4,9 +4,9 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <span class="h2">身份管理</span>
+            <span class="h2"> 群組管理 </span>
             @can('group-create')
-                <a class="btn btn-success float-right" href="{{ route('groups.create') }}"> 新建身份 </a>
+                <a class="btn btn-success float-right" href="{{ route('groups.create') }}"> 新建群組 </a>
             @endcan
         </div>
     </div>
@@ -32,8 +32,8 @@
                 <td>{{ $group->name }}</td>
                 <td style="max-width:200px;">
                     @if (!empty($group->getUsersName()))
-                        @foreach ($group->getUsersName() as $v)
-                            <label class="badge badge-light">{{ $v }}</label>
+                        @foreach ($group->getUsersName() as $name)
+                            <label class="badge badge-light">{{ $name }}</label>
                         @endforeach
                     @endif
                 </td>

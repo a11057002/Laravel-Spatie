@@ -63,6 +63,7 @@
                             @can('role-edit')
                                 <li><a class="nav-link" href="{{ route('roles.index') }}">身份管理</a></li>
                             @endcan
+                            <li><a class="nav-link" href="{{ route('groups.index') }}">群組管理</a></li>
                             {{-- <li><a class="nav-link" href="{{ route('products.index') }}"></a></li> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

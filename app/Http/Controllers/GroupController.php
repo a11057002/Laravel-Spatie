@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Models\Group;
+use DB;
 
 class GroupController extends Controller
 {
@@ -12,11 +13,6 @@ class GroupController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $groups = Group::orderBy('id', 'DESC')->paginate(5);
@@ -26,7 +22,42 @@ class GroupController extends Controller
         // ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
+    public function create()
+    {
+        return view('groups.create');
+    }
 
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'name' => 'required|unique:groups,name',
+        ]);
+
+        $group = Group::create(['name' => $request->input('name')]);
+        return redirect()->route('groups.index')->with('success', 'Group created successfully');
+    }
+
+    public function edit($id)
+    {
+        $group = Group::find($id);
+        $users = $group->users()->get();
+        return view('groups.edit', compact('group', 'users'));
+    }
+
+
+    public function update(Request $request,$id)
+    {
+        $this->validate($request,[
+            'name' => 'required|unique:groups'
+        ]);
+
+        $input = $request->all();
+        $group = Group::find($id);
+        $group->update($input);
+
+        return redirect()->route('groups.index')
+            ->with('success', 'Group updated successfully');
+    }
 
     public function destroy($id)
     {

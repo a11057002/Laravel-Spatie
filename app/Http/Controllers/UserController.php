@@ -2,51 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use App\Models\User;
+use App\Models\Group;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 
 class UserController extends Controller
 {
 
     function __construct()
-    {       
+    {
         $this->middleware('permission:user-list');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $data = User::orderBy('id', 'DESC')->paginate(5)->onEachSide(2);
         return view('users.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return view('users.create', compact('roles'));
+        $groups = Group::pluck('name', 'name')->all();
+        return view('users.create', compact('roles','groups'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -61,44 +47,27 @@ class UserController extends Controller
 
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
+        $this->assignGroups($input['groups'],$user->id);
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $user = User::find($id);
         return view('users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $user = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
-
-        return view('users.edit', compact('user', 'roles', 'userRole'));
+        $groups = Group::pluck('name', 'name')->all();
+        $userGroup = $user->group->pluck('name', 'name')->all();
+        return view('users.edit', compact('user', 'roles', 'userRole', 'groups', 'userGroup'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -117,24 +86,37 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id', $id)->delete();
 
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        DB::table('user_group')->where('user_id', $id)->delete();
+
+        // add groups
+        $this->assignGroups($input['groups'],$id);
+
+        // add roles
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         User::find($id)->delete();
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    private function assignGroups($groups,$id)
+    {
+        foreach ($groups as $group) {
+            $groupId = Group::where('name', $group)->pluck('id')[0];
+            DB::table('user_group')->insert(
+                [
+                    'group_id' => $groupId, 
+                    'user_id' => $id
+                ]
+            );
+        };
     }
 }
