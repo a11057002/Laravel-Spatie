@@ -18,7 +18,7 @@ class UserController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:user-list');
+        $this->middleware(['permission:user-list']);
     }
 
     public function index(Request $request)

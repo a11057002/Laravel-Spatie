@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        // dd($this->app);
     }
 
     /**
@@ -27,8 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // fix pagination css in laravel 8
-        Paginator::useBootStrap();
-
+        Paginator::useBootStrap();        
         // you can add Gate facades here if you want to
         // Gate::define('andy-test', function (User $user, User $post) {
         //     return $user->id === $post->id;
