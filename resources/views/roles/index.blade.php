@@ -43,9 +43,14 @@
                         <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}">編輯</a>
                     @endcan
                     @can('role-delete')
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline']) !!}
+                        <form class="d-inline" action="/roles/{{ $role->id }}" method="post">
+                            @csrf
+                            <input name="_method" type="hidden" value="DELETE">
+                            <input class="btn btn-danger" type="submit" value="刪除">
+                        </form>
+                        {{-- {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline']) !!}
                         {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
+                        {!! Form::close() !!} --}}
                     @endcan
                 </td>
             </tr>

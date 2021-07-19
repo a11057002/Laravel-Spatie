@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -59,9 +60,20 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
+        // if pass in id.
+        // $user = User::find($id);
+        
+        // check currently authenticated user is authorized to perfrom action.
+        // dd(Gate::allows('andy-test',$user));             return boolean
+        // dd(Gate::authorize('andy-test',User::find(29))); return http response  
+       
+
+        // check other user is authorized to perform action.
+        // dd(Gate::forUser($user)->allows('andy-test',$user));
+        // dd(Gate::forUser($user)->denies('andy-test',$user));
+        
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
         $groups = Group::pluck('name', 'name')->all();

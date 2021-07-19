@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Image;
+use App\Models\News;
 use PHPUnit\TextUI\XmlConfiguration\Groups;
 use DB;
 class DatabaseSeeder extends Seeder
@@ -26,10 +28,12 @@ class DatabaseSeeder extends Seeder
         // print($a);
         // print_r(explode(',',$a));
         // $this->$a();
+        // dd(News::find(1)->image->pluck('id'));
+        dd(Image::find(1)->News->pluck('id'));
     }
 
-    public function go()
-    {
-        echo "123\r\n";
-    }
+    // public function go()
+    // {
+    //     echo "123\r\n";
+    // }
 }
