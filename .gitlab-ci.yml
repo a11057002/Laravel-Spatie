@@ -1,0 +1,38 @@
+# List of stages for jobs, and their order of execution
+stages:          
+  - build
+  - test
+  - deploy
+
+
+composer:
+  tags:
+    - SSH
+  stage: build
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cp .env.example .env
+    - php artisan key:generate
+
+
+deploy:
+ tags:
+   - SSH
+ stage: deploy
+ script:
+   - sudo cp -r $PWD /var/www
+   - sudo mv /var/www/laravel /var/www/laravel2
+   - sudo chmod -R 755 /var/www/laravel/storage
+
+  # SSH runner doesn't support
+  # artifacts:
+  #   expire_in: 1 day
+  #   paths:
+  #     - vendor/
+  #     - .env
+  
+  # cache: 
+  #   key: master-composer
+  #   paths:
+  #     - vendor/
+
