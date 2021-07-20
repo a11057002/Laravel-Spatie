@@ -24,10 +24,9 @@ deploy:
  dependencies:
    - composer
  script:
-    - ls
-  #  - sudo mv /var/www/laravel /var/www/laravel2
-  #  - sudo cp -r $PWD /var/www/laravel
-  #  - sudo chmod -R 755 /var/www/laravel/storage
+   - sudo mv /var/www/laravel /var/www/laravel2
+   - sudo cp -r $PWD /var/www/laravel
+   - sudo chmod -R 755 /var/www/laravel/storage
 
   # SSH runner doesn't support
   # artifacts:
