@@ -11,10 +11,6 @@ composer:
   stage: build
   script:
     - composer install
-    - cp .env.example .env
-    - sed -e 's/DB_DATABASE=.*/DB_DATABASE=permission/' .env
-    - sed -e 's/DB_PASSWORD=.*/DB_PASSWPRD=testdb/' .env
-    - php artisan key:generate
   artifacts:
     untracked: true
     
@@ -26,6 +22,10 @@ deploy:
  dependencies:
    - composer
  script:
+   - cp .env.example .env
+   - sed -e 's/DB_DATABASE=.*/DB_DATABASE=permission/' .env
+   - sed -e 's/DB_PASSWORD=.*/DB_PASSWPRD=testdb/' .env
+   - php artisan key:generate
    - sudo rm -rf /var/www/laravel
    - sudo cp -r $PWD /var/www/laravel
    - sudo chown -R apache:apache /var/www/laravel
