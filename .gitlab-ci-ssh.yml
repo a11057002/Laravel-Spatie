@@ -6,33 +6,30 @@ stages:
 
 
 composer:
-  image: php
   tags:
-    - docker
+    - SSH
   stage: build
   script:
     - composer install
-    # - cp .env.example .env
-    # - sed -i 's/DB_DATABASE=.*/DB_DATABASE=andynews/' .env
-    # - sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=testdb/' .env
-    # - php artisan key:generate
+    - cp .env.example .env
+    - sed -i 's/DB_DATABASE=.*/DB_DATABASE=andynews/' .env
+    - sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=testdb/' .env
+    - php artisan key:generate
   artifacts:
     untracked: true
     
 
 deploy:
- image: php
  tags:
-   - docker
+   - SSH
  stage: deploy
  dependencies:
    - composer
  script:
-     - echo 'test'
-#    - sudo rm -rf /var/www/laravel
-#    - sudo cp -r $PWD /var/www/laravel
-#    - sudo chown -R apache:apache /var/www/laravel
-#    - sudo chmod -R 755 /var/www/laravel/storage
+   - sudo rm -rf /var/www/laravel
+   - sudo cp -r $PWD /var/www/laravel
+   - sudo chown -R apache:apache /var/www/laravel
+   - sudo chmod -R 755 /var/www/laravel/storage
 
   # SSH runner doesn't support
   # artifacts:
