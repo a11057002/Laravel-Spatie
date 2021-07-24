@@ -28,7 +28,7 @@ deploy:
  script:
    - sudo rm -rf /var/www/laravel
    - sudo cp -r $PWD /var/www/laravel
-   - sudo chown -R apache:apahce laravel
+   - sudo chown -R apache:apache laravel
    - sudo chmod -R 755 /var/www/laravel/storage
 
   # SSH runner doesn't support
