@@ -17,16 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth::routes();
-Auth::routes(['verify' => true]);
+Auth::routes();
+// Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('news',function(){
 //     return view('news.index');
 // })->name('news.index');
 
-Route::group(['middleware' => ['auth','verified']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('groups', \App\Http\Controllers\GroupController::class);
