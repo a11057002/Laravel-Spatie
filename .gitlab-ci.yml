@@ -12,6 +12,8 @@ composer:
   script:
     - composer install
     - cp .env.example .env
+    - sed -e 's/DB_DATABASE=.*/DB_DATABASE=permission' .env
+    - sed -e 's/DB_PASSWORD=.*/DB_PASSWPRD=dbtest'
     - php artisan key:generate
   artifacts:
     untracked: true
@@ -24,8 +26,9 @@ deploy:
  dependencies:
    - composer
  script:
-   - sudo mv /var/www/laravel /var/www/laravel2
+   - sudo rm -rf /var/www/laravel
    - sudo cp -r $PWD /var/www/laravel
+   - sudo chown -R apache:apahce laravel
    - sudo chmod -R 755 /var/www/laravel/storage
 
   # SSH runner doesn't support
