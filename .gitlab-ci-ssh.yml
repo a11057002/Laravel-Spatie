@@ -17,7 +17,13 @@ composer:
     - php artisan key:generate
   artifacts:
     untracked: true
-    
+
+test:
+  tags:
+    - SSH
+  stage: test
+  script:
+    - ./vendor/bin/phpunit    
 
 deploy:
  tags:

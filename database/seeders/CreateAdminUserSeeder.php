@@ -17,29 +17,30 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i < 10; $i++) {
-            $user = User::create([
-                'name' => 'andy',
-                'email' => 'test' . $i .'@a.com',
-                'password' => bcrypt('andy1234')
-            ]);
-        }
-        // $role = "user";
+        // for ($i = 0; $i < 10; $i++) {
+        //     $user = User::create([
+        //         'name' => 'andy',
+        //         'email' => 'test' . $i .'@a.com',
+        //         'password' => bcrypt('andy1234')
+        //     ]);
+        // }
+        $role = "admin";
 
-        // $user = User::create([
-        //     'name' => $role,
-        //     'email' => $role.'@a.com',
-        //     'password' => bcrypt('andy1234')
-        // ]);
+        $user = User::create([
+            'name' => $role,
+            'email' => $role.'@a.com',
+            'password' => bcrypt('andy1234')
+        ]);
         // $role = Role::create(['name' => 'Top']);
-        // $role = Role::findByName('admin');
-        // $permissions = Permission::pluck('id', 'name')->all();
+        $role = Role::findByName('admin');
+        $permissions = Permission::pluck('id', 'name')->all();
 
         // dd($permissions);
         // dd(User::find(5)->getRoleNames());
-        // $role->syncPermissions($permissions);
+        
+        $role->syncPermissions($permissions);
         // $user->syncPermissions($permissions);
-        // $user->assignRole([$role->id]);
+        $user->assignRole([$role->id]);
         // dd(User::find(4)->getAllPermissions());
     }
 }
