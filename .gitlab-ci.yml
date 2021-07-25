@@ -1,5 +1,5 @@
 variables:
-  MYSQL_DATABASE: news
+  MYSQL_DATABASE: andydbtest
   MYSQL_ROOT_PASSWORD: testdb
   DB_HOST: mysql
 
@@ -35,7 +35,6 @@ test:
   dependencies:
     - composer
   script:
-    - cat .env
     - ./vendor/bin/phpunit
     
 deploy:
