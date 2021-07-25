@@ -1,3 +1,8 @@
+variables:
+  MYSQL_DATABASE: andydbtest
+  MYSQL_ROOT_PASSWORD: testdb
+  DB_HOST: mysql
+
 # List of stages for jobs, and their order of execution
 stages:          
   - build
@@ -6,9 +11,10 @@ stages:
 
 
 composer:
-  tags:
-    - SSH
   stage: build
+  image: composer
+  tags:
+    - docker
   script:
     - composer install
     - cp .env.example .env
@@ -17,18 +23,24 @@ composer:
     - php artisan key:generate
   artifacts:
     untracked: true
+    
 
 test:
-  tags:
-    - SSH
   stage: test
+  image: edbizarro/gitlab-ci-pipeline-php:8.0-alpine
+  services:
+    - mysql:latest
+  tags:
+    - docker
+  dependencies:
+    - composer
   script:
-    - ./vendor/bin/phpunit    
-
+    - ./vendor/bin/phpunit
+    
 deploy:
+  stage: deploy
   tags:
     - SSH
-  stage: deploy
   dependencies:
     - composer
   script:

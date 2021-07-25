@@ -1,48 +1,30 @@
-variables:
-  MYSQL_DATABASE: andydbtest
-  MYSQL_ROOT_PASSWORD: testdb
-  DB_HOST: mysql
-
-# List of stages for jobs, and their order of execution
 stages:          
   - build
   - test
   - deploy
-
-
+  
 composer:
-  stage: build
-  image: composer
   tags:
-    - docker
+    - SSH
+  stage: build
   script:
     - composer install
     - cp .env.example .env
     - sed -i 's/DB_DATABASE=.*/DB_DATABASE=andynews/' .env
     - sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=testdb/' .env
     - php artisan key:generate
-  artifacts:
-    untracked: true
-    
 
 test:
-  stage: test
-  image: edbizarro/gitlab-ci-pipeline-php:8.0-alpine
-  services:
-    - mysql:latest
-  tags:
-    - docker
-  dependencies:
-    - composer
-  script:
-    - ./vendor/bin/phpunit
-    
-deploy:
-  stage: deploy
   tags:
     - SSH
-  dependencies:
-    - composer
+  stage: test
+  script:
+    - ./vendor/bin/phpunit    
+
+deploy:
+  tags:
+    - SSH
+  stage: deploy
   script:
     - sudo rm -rf /var/www/laravel
     - sudo cp -r $PWD /var/www/laravel
