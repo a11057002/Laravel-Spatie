@@ -6,9 +6,8 @@ stages:
 
 
 composer:
-  image: composer
   tags:
-    - docker
+    - SSH
   stage: build
   script:
     - composer install
@@ -18,36 +17,25 @@ composer:
     - php artisan key:generate
   artifacts:
     untracked: true
-    
 
 test:
-  services:
-    - mysql:latest
   tags:
-    - docker
-  stage: build
-  dependencies:
-    - composer
-  variables:
-    MYSQL_DATABASE: andynews
-    MYSQL_ROOT_PASSWORD: testdb
+    - SSH
+  stage: test
   script:
-    - ./vendor/bin/phpunit
-    
+    - ./vendor/bin/phpunit    
 
 deploy:
-  image: php
   tags:
-    - docker
+    - SSH
   stage: deploy
   dependencies:
     - composer
   script:
-     - echo 'test'
-#    - sudo rm -rf /var/www/laravel
-#    - sudo cp -r $PWD /var/www/laravel
-#    - sudo chown -R apache:apache /var/www/laravel
-#    - sudo chmod -R 755 /var/www/laravel/storage
+    - sudo rm -rf /var/www/laravel
+    - sudo cp -r $PWD /var/www/laravel
+    - sudo chown -R apache:apache /var/www/laravel
+    - sudo chmod -R 755 /var/www/laravel/storage
 
   # SSH runner doesn't support
   # artifacts:
