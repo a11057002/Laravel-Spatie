@@ -35,7 +35,6 @@ test:
   dependencies:
     - composer
   script:
-    - cat /usr/local/etc/php/php.ini
     - ./vendor/bin/phpunit
     
 
