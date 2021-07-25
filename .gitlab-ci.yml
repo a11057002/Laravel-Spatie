@@ -27,7 +27,7 @@ composer:
 
 test:
   stage: test
-  image: php
+  image: edbizarro/gitlab-ci-pipeline-php:8.0-alpine
   services:
     - mysql:latest
   tags:
@@ -37,7 +37,6 @@ test:
   script:
     - ./vendor/bin/phpunit
     
-
 deploy:
   stage: deploy
   image: php
