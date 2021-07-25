@@ -33,7 +33,7 @@ test:
     MYSQL_DATABASE: andynews
     MYSQL_ROOT_PASSWORD: testdb
   script:
-    - cat /usr/local/etc/php
+    - cat /usr/local/etc/php/php.ini
     - ./vendor/bin/phpunit
     
 
