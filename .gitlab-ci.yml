@@ -22,6 +22,8 @@ composer:
 
 test:
   image: php
+  services:
+    - mysql:latest
   tags:
     - docker
   stage: test
@@ -31,7 +33,6 @@ test:
     MYSQL_DATABASE: andynews
     MYSQL_ROOT_PASSWORD: testdb
   script:
-    - apt-get install php-mysql
     - ./vendor/bin/phpunit
     
 
