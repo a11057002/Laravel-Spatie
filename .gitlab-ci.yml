@@ -23,6 +23,7 @@ composer:
 test:
   services:
     - mysql:latest
+    - php
   tags:
     - docker
   stage: test
