@@ -39,17 +39,15 @@ test:
     
 deploy:
   stage: deploy
-  image: php
   tags:
-    - docker
+    - SSH
   dependencies:
     - composer
   script:
-     - echo 'test'
-#    - sudo rm -rf /var/www/laravel
-#    - sudo cp -r $PWD /var/www/laravel
-#    - sudo chown -R apache:apache /var/www/laravel
-#    - sudo chmod -R 755 /var/www/laravel/storage
+    - sudo rm -rf /var/www/laravel
+    - sudo cp -r $PWD /var/www/laravel
+    - sudo chown -R apache:apache /var/www/laravel
+    - sudo chmod -R 755 /var/www/laravel/storage
 
   # SSH runner doesn't support
   # artifacts:
