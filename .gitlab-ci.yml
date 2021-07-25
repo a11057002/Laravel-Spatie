@@ -6,10 +6,10 @@ stages:
 
 
 composer:
+  stage: build
   image: composer
   tags:
     - docker
-  stage: build
   script:
     - composer install
     - cp .env.example .env
@@ -21,26 +21,27 @@ composer:
     
 
 test:
+  stage: test
   image: php
   services:
     - mysql:latest
   tags:
     - docker
-  stage: test
   dependencies:
     - composer
   variables:
     MYSQL_DATABASE: andynews
     MYSQL_ROOT_PASSWORD: testdb
   script:
+    - cat .env
     - ./vendor/bin/phpunit
     
 
 deploy:
+  stage: deploy
   image: php
   tags:
     - docker
-  stage: deploy
   dependencies:
     - composer
   script:
