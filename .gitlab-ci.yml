@@ -23,8 +23,6 @@ composer:
 test:
   stage: test
   image: php
-  services:
-    - mysql:latest
   tags:
     - docker
   dependencies:
@@ -33,7 +31,7 @@ test:
     MYSQL_DATABASE: andynews
     MYSQL_ROOT_PASSWORD: testdb
   script:
-    - cat .env
+    - apt-get pdo_mysql
     - ./vendor/bin/phpunit
     
 
