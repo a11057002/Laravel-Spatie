@@ -21,6 +21,8 @@ composer:
 test:
   tags:
     - SSH
+  dependencies:
+    - composer
   stage: test
   script:
     - ./vendor/bin/phpunit    
