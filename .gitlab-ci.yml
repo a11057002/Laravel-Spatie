@@ -1,8 +1,10 @@
+# List of stages for jobs, and their order of execution
 stages:          
   - build
   - test
   - deploy
-  
+
+
 composer:
   tags:
     - SSH
@@ -13,6 +15,8 @@ composer:
     - sed -i 's/DB_DATABASE=.*/DB_DATABASE=andynews/' .env
     - sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=testdb/' .env
     - php artisan key:generate
+  artifacts:
+    untracked: true
 
 test:
   tags:
@@ -25,6 +29,8 @@ deploy:
   tags:
     - SSH
   stage: deploy
+  dependencies:
+    - composer
   script:
     - sudo rm -rf /var/www/laravel
     - sudo cp -r $PWD /var/www/laravel
