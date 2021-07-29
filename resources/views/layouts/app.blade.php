@@ -56,14 +56,16 @@
                                 </li>
                             @endif
                         @else
-                            <li><a class="nav-link" href="{{ route('news.index') }}">申請新聞</a></li>
+                            {{-- <li><a class="nav-link" href="{{ route('news.index') }}">申請新聞</a></li> --}}
                             @can('user-edit')
                                 <li><a class="nav-link" href="{{ route('users.index') }}">用戶管理</a></li>
                             @endcan
                             @can('role-edit')
                                 <li><a class="nav-link" href="{{ route('roles.index') }}">身份管理</a></li>
                             @endcan
-                            <li><a class="nav-link" href="{{ route('groups.index') }}">群組管理</a></li>
+                            @can('group-edit')
+                                <li><a class="nav-link" href="{{ route('groups.index') }}">群組管理</a></li>
+                            @endcan
                             {{-- <li><a class="nav-link" href="{{ route('products.index') }}"></a></li> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -72,8 +74,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
