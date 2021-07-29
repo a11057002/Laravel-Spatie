@@ -39,7 +39,7 @@ test:
 deploy:
   stage: deploy
   tags:
-    - SSH
+    - Shell
   dependencies:
     - composer
   script:
@@ -47,16 +47,3 @@ deploy:
     - sudo cp -r $PWD /var/www/laravel
     - sudo chown -R apache:apache /var/www/laravel
     - sudo chmod -R 755 /var/www/laravel/storage
-
-  # SSH runner doesn't support
-  # artifacts:
-  #   expire_in: 1 day
-  #   paths:
-  #     - vendor/
-  #     - .env
-  
-  # cache: 
-  #   key: master-composer
-  #   paths:
-  #     - vendor/
-
