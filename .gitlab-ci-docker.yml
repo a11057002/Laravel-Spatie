@@ -1,14 +1,19 @@
+variables:
+  MYSQL_DATABASE: andydbtest
+  MYSQL_ROOT_PASSWORD: testdb
+  DB_HOST: mysql
+
 # List of stages for jobs, and their order of execution
 stages:          
   - build
   - test
   - deploy
 
-
 composer:
-  tags:
-    - SSH
   stage: build
+  image: composer
+  tags:
+    - docker
   script:
     - composer install
     - cp .env.example .env
@@ -17,37 +22,28 @@ composer:
     - php artisan key:generate
   artifacts:
     untracked: true
+    
 
 test:
-  tags:
-    - SSH
-  dependencies:
-    - composer
   stage: test
-  script:
-    - ./vendor/bin/phpunit    
-
-deploy:
+  image: edbizarro/gitlab-ci-pipeline-php:8.0-alpine
+  services:
+    - mysql:latest
   tags:
-    - SSH
-  stage: deploy
+    - docker
   dependencies:
     - composer
   script:
-    - sudo rm -rf /var/www/laravel
+    - ./vendor/bin/phpunit
+    
+deploy:
+  stage: deploy
+  tags:
+    - Shell
+  dependencies:
+    - composer
+  script:
+    # - sudo rm -rf /var/www/laravel
     - sudo cp -r $PWD /var/www/laravel
     - sudo chown -R apache:apache /var/www/laravel
     - sudo chmod -R 755 /var/www/laravel/storage
-
-  # SSH runner doesn't support
-  # artifacts:
-  #   expire_in: 1 day
-  #   paths:
-  #     - vendor/
-  #     - .env
-  
-  # cache: 
-  #   key: master-composer
-  #   paths:
-  #     - vendor/
-
