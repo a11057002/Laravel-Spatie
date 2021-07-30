@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // dd(request()->cookie('test'));
+        return response(view('home'))->cookie('test','12312321');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ShortUrlService;
 
 class NewsController extends Controller
 {
@@ -13,29 +14,34 @@ class NewsController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {
         $request->validate([
             'imageFile' => 'required',
             'imageFile.*' => 'mimes:jpeg,jpg,png,gif|max:2048'
         ]);
 
-        if($req->hasfile('imageFile')) {
-            foreach($req->file('imageFile') as $file)
-            {
+        if ($req->hasfile('imageFile')) {
+            foreach ($req->file('imageFile') as $file) {
                 $name = $file->getClientOriginalName();
-                $file->move(public_path().'/uploads/', $name);  
-                $imgData[] = $name;  
+                $file->move(public_path() . '/uploads/', $name);
+                $imgData[] = $name;
             }
-    
+
             $fileModal = new Image();
             $fileModal->name = json_encode($imgData);
             $fileModal->image_path = json_encode($imgData);
-            
-           
+
+
             $fileModal->save();
-            
-           return redirect()->route('news.index')->with('success', '申請成功');
+
+            return redirect()->route('news.index')->with('success', '申請成功');
         }
     }
-    
+
+    // public function sharedUrl()
+    // {
+    //     $service = new ShortUrlService();
+    //     $url = $service->makeShortUrl("http://localhost:8877/users");
+    //     return response(['url'=>$url]);
+    // }
 }

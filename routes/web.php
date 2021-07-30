@@ -33,3 +33,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('groups', \App\Http\Controllers\GroupController::class);
     Route::resource('news', \App\Http\Controllers\NewsController::class);
 });
+
+// Route::get('url',[\App\Http\Controllers\NewsController::class,'sharedUrl']);
