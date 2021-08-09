@@ -35,7 +35,7 @@
                 {!! Form::text('email', null, ['placeholder' => 'Email', 'class' => 'form-control']) !!}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        {{-- <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>密碼:</strong>
                 {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control']) !!}
@@ -46,7 +46,7 @@
                 <strong>確認密碼:</strong>
                 {!! Form::password('confirm-password', ['placeholder' => 'Confirm Password', 'class' => 'form-control']) !!}
             </div>
-        </div>
+        </div> --}}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>身份:</strong>

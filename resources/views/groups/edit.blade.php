@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <span class="h2">編輯群組</span>
-            <a class="btn btn-primary float-right" href="{{ route('roles.index') }}"> 返回 </a>
+            <a class="btn btn-primary float-right" href="{{ route('groups.index') }}"> 返回 </a>
         </div>
     </div>
 

@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/group.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -57,13 +58,13 @@
                             @endif
                         @else
                             {{-- <li><a class="nav-link" href="{{ route('news.index') }}">申請新聞</a></li> --}}
-                            @can('user-edit')
+                            @can('user-list')
                                 <li><a class="nav-link" href="{{ route('users.index') }}">用戶管理</a></li>
                             @endcan
-                            @can('role-edit')
+                            @can('role-list')
                                 <li><a class="nav-link" href="{{ route('roles.index') }}">身份管理</a></li>
                             @endcan
-                            @can('group-edit')
+                            @can('group-list')
                                 <li><a class="nav-link" href="{{ route('groups.index') }}">群組管理</a></li>
                             @endcan
                             {{-- <li><a class="nav-link" href="{{ route('products.index') }}"></a></li> --}}
@@ -74,10 +75,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                        登出
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -96,6 +95,25 @@
                 @yield('content')
             </div>
         </main>
+    </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">要登出嗎?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                    <a onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        <button type=" button" class="btn btn-danger">登出</button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

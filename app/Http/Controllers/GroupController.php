@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Models\Group;
 use DB;
+use Facade\FlareClient\Http\Response;
 
 class GroupController extends Controller
 {
@@ -29,7 +30,7 @@ class GroupController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required|unique:groups,name',
         ]);
 
@@ -45,16 +46,18 @@ class GroupController extends Controller
     }
 
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name' => 'required|unique:groups'
+        
+        $this->validate($request, [
+            'name' => 'required|unique:groups,name' 
         ]);
 
         $input = $request->all();
         $group = Group::find($id);
         $group->update($input);
 
+        // return ['message' => 'success','groupName'=>$group->name];
         return redirect()->route('groups.index')
             ->with('success', 'Group updated successfully');
     }
